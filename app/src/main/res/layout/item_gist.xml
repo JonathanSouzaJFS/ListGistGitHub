@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -21,14 +22,14 @@
             android:layout_height="60dp"
             android:background="@drawable/circle"
             android:elevation="6dp"
-            android:padding="7dp"
-            android:scaleType="fitCenter"
             app:layout_anchor="@id/cardView"
+            android:padding="7dp"
+            android:src="@drawable/placeholder"
             app:layout_anchorGravity="left|center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            bind:picassoLoad="@{gist.owner.avatarUrl}"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
