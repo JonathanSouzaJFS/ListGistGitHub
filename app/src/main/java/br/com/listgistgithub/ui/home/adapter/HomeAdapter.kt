@@ -2,7 +2,10 @@ package br.com.listgistgithub.ui.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import br.com.listgistgithub.databinding.ItemGistBinding
 import br.com.listgistgithub.model.Gist
@@ -12,6 +15,8 @@ class HomeAdapter(
     private val list: ArrayList<Gist>,
     private val onItemClickListener: ((gist: Gist) -> Unit)
 ) : RecyclerView.Adapter<HomeAdapter.DataViewHolder>() {
+
+    private var lastPosition = -1
 
     inner class DataViewHolder(
         private val binding: ItemGistBinding,
@@ -26,6 +31,15 @@ class HomeAdapter(
         }
     }
 
+    private fun setAnimation(viewToAnimate: View, position: Int) {
+        if (position > lastPosition) {
+            val animation: Animation =
+                AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left)
+            viewToAnimate.startAnimation(animation)
+            lastPosition = position
+        }
+    }
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val inflater = LayoutInflater.from(context)
         val binding = ItemGistBinding.inflate(inflater, parent, false)
@@ -36,6 +50,7 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         holder.bind(list[position])
+        setAnimation(holder.itemView, position)
     }
 
     fun addGist(gists: List<Gist>) {
