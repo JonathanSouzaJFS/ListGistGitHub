@@ -56,7 +56,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Example Owner" />
+                    tools:text="@{gist.owner.login}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/typeGist"
@@ -68,7 +68,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/nameGistOwner"
                     app:layout_constraintTop_toBottomOf="@+id/nameGistOwner"
-                    tools:text="application/json" />
+                    tools:text="@{gist.description}" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

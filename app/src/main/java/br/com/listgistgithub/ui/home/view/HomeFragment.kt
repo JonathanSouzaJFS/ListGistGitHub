@@ -14,8 +14,8 @@ import br.com.listgistgithub.data.api.ApiHelper
 import br.com.listgistgithub.data.api.RetrofitBuilder
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.base.ViewModelFactory
-import br.com.listgistgithub.ui.home.viewmodel.HomeViewModel
 import br.com.listgistgithub.ui.home.adapter.HomeAdapter
+import br.com.listgistgithub.ui.home.viewmodel.HomeViewModel
 import br.com.listgistgithub.utils.Status
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
 
     private fun setupUI() {
         recyclerViewGists.layoutManager = LinearLayoutManager(requireContext())
-        adapter = HomeAdapter(arrayListOf())
+        adapter = HomeAdapter(requireContext(), arrayListOf()) { gist -> }
         recyclerViewGists.adapter = adapter
     }
 

@@ -1,38 +1,45 @@
 package br.com.listgistgithub.ui.home.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.listgistgithub.R
+import br.com.listgistgithub.databinding.ItemGistBinding
 import br.com.listgistgithub.model.Gist
-import kotlinx.android.synthetic.main.item_gist.view.*
 
-class HomeAdapter(private val gist: ArrayList<Gist>) :
-    RecyclerView.Adapter<HomeAdapter.DataViewHolder>() {
+class HomeAdapter(
+    private val context: Context,
+    private val list: ArrayList<Gist>,
+    private val onItemClickListener: ((gist: Gist) -> Unit)
+) : RecyclerView.Adapter<HomeAdapter.DataViewHolder>() {
 
-    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class DataViewHolder(
+        private val binding: ItemGistBinding,
+        private val onItemClickListener: ((gist: Gist) -> Unit)
+    ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(gist: Gist) {
-            itemView.apply {
-                nameGistOwner.text = gist.owner!!.login
-                typeGist.text = gist.description
+            binding.gist = gist
+            binding.root.setOnClickListener {
+                onItemClickListener.invoke(gist)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder =
-        DataViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_gist, parent, false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
+        val inflater = LayoutInflater.from(context)
+        val binding = ItemGistBinding.inflate(inflater, parent, false)
+        return DataViewHolder(binding, onItemClickListener)
+    }
 
-    override fun getItemCount(): Int = gist.size
+    override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(gist[position])
+        holder.bind(list[position])
     }
 
     fun addGist(gists: List<Gist>) {
-        this.gist.apply {
+        this.list.apply {
             clear()
             addAll(gists)
         }
