@@ -13,13 +13,13 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_height="155dp"
         android:layout_marginBottom="10dp">
 
         <RelativeLayout
             android:id="@+id/shape_layout"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="@drawable/circle"
@@ -29,8 +29,8 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/myCardView"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 app:cardCornerRadius="35dp">
@@ -48,7 +48,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="130dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="10dp"
             app:cardCornerRadius="15dp"
@@ -84,6 +84,57 @@
                     app:layout_constraintStart_toStartOf="@+id/nameGistOwner"
                     app:layout_constraintTop_toBottomOf="@+id/nameGistOwner"
                     tools:text="@{gist.description}" />
+
+                <ImageView
+                    android:id="@+id/iconCommentsGist"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:src="@drawable/ic_comments"
+                    android:text="0000000000000000"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iconFavoriteGist" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/commentsGist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@{``+gist.comments}"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/iconCommentsGist"
+                    app:layout_constraintStart_toEndOf="@+id/iconCommentsGist"
+                    app:layout_constraintTop_toTopOf="@+id/iconCommentsGist" />
+
+                <ImageView
+                    android:id="@+id/iconFavoriteGist"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="42dp"
+                    android:layout_marginBottom="24dp"
+                    android:src="@drawable/ic_heart"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/shareGist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="42dp"
+                    android:text="SHARE"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/iconCommentsGist"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iconCommentsGist" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

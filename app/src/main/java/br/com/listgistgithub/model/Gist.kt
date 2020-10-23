@@ -11,14 +11,17 @@ data class Gist(
     @SerializedName("html_url")
     var htmlUrl: String? = null,
 
+    @SerializedName("description")
+    var description: String? = null,
+
+    @SerializedName("comments")
+    var comments: Int? = null,
+
     @SerializedName("created_at")
     var createdAt: String? = null,
 
     @SerializedName("updated_at")
     var updatedAt: String? = null,
-
-    @SerializedName("description")
-    var description: String? = null,
 
     @SerializedName("owner")
     var owner: Owner? = null,
