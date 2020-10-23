@@ -1,11 +1,12 @@
 package br.com.listgistgithub.utils
 
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import br.com.listgistgithub.R
 import com.squareup.picasso.Picasso
 
-class ImageUtils {
+class BidingUtils {
 
     companion object {
 
@@ -18,6 +19,14 @@ class ImageUtils {
                     .error(R.drawable.placeholder)
                     .into(image)
             }
+        }
+
+        @JvmStatic
+        @BindingAdapter("bind:typeGist")
+        fun loadTypeGist(textview: AppCompatTextView, files: Map<String, Map<String, Any>>) {
+            textview.text = (
+                    files.values.firstOrNull()?.getValue("type") ?: "Undefined")
+                    as String
         }
     }
 }

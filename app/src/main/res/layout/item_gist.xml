@@ -83,7 +83,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/nameGistOwner"
                     app:layout_constraintTop_toBottomOf="@+id/nameGistOwner"
-                    tools:text="@{gist.description}" />
+                    bind:typeGist="@{gist.files}" />
 
                 <ImageView
                     android:id="@+id/iconCommentsGist"
@@ -92,7 +92,6 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="24dp"
                     android:src="@drawable/ic_comments"
-                    android:text="0000000000000000"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
