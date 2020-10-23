@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.listgistgithub.R
 import br.com.listgistgithub.model.Gist
-import kotlinx.android.synthetic.main.item_layout.view.*
+import kotlinx.android.synthetic.main.item_gist.view.*
 
 class HomeAdapter(private val gist: ArrayList<Gist>) :
     RecyclerView.Adapter<HomeAdapter.DataViewHolder>() {
@@ -22,7 +22,7 @@ class HomeAdapter(private val gist: ArrayList<Gist>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder =
         DataViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_gist, parent, false)
         )
 
     override fun getItemCount(): Int = gist.size
