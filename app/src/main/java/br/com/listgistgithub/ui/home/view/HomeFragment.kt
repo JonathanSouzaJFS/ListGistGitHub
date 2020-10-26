@@ -1,7 +1,6 @@
 package br.com.listgistgithub.ui.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.listgistgithub.R
@@ -29,7 +29,6 @@ class HomeFragment : Fragment() {
     private var totalItemCount = 0
     private var loading = false
     private var pageLoad = 0
-    private var totalPages = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +56,10 @@ class HomeFragment : Fragment() {
     private fun setupUI() {
         recyclerViewGists.layoutManager = LinearLayoutManager(requireContext())
         adapter = HomeAdapter(requireContext(), arrayListOf()) { gist ->
-            // OOther view
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
+                gist.owner!!.login!!, gist.owner!!.avatarUrl!!, gist.description!!
+            )
+            requireView().findNavController().navigate(action)
         }
 
         recyclerViewGists.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -65,27 +67,14 @@ class HomeFragment : Fragment() {
                 recyclerView: RecyclerView, dx: Int, dy: Int
             ) {
                 if (dy > 0) {
-                    Log.i(
-                        "ResultadoJFS",
-                        "dy > 0 (pageLoad: " + pageLoad + ") (totalPages: " + totalPages + ")"
-                    );
-
                     totalItemCount = recyclerViewGists.layoutManager!!.itemCount // Total da lista
                     pastVisiblesItems =
                         (recyclerViewGists.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() // Itens visiveis na tela
-                    Log.i(
-                        "ResultadoJFS",
-                        "(pastVisiblesItems " + pastVisiblesItems + ") (totalItemCount: " + totalItemCount + ")"
-                    );
 
                     if (!loading) {
                         if (pastVisiblesItems >= totalItemCount - 1) {
                             loading = true
                             pageLoad += 1
-                            Log.i(
-                                "ResultadoJFS",
-                                "Entrou aqui pra atualizar: Page: " + pageLoad + " - 30 itens."
-                            )
                             setupObservers()
                         }
                     }
@@ -112,7 +101,6 @@ class HomeFragment : Fragment() {
                     }
                     Status.LOADING -> {
                         progressBar.visibility = View.VISIBLE
-                        //       recyclerViewGists.visibility = View.GONE
                     }
                 }
             }

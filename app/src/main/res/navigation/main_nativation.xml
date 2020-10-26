@@ -26,13 +26,13 @@
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <argument
-            android:name="OwnerName"
+            android:name="ownerName"
             app:argType="string" />
         <argument
-            android:name="OwnerPhoto"
+            android:name="ownerPhoto"
             app:argType="string" />
         <argument
-            android:name="OwnerDescription"
+            android:name="ownerDescription"
             app:argType="string" />
     </fragment>
     <fragment

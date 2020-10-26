@@ -5,9 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import br.com.listgistgithub.R
+import br.com.listgistgithub.utils.BidingUtils
+import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
+
+    private val args: DetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,5 +25,8 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        BidingUtils.loadImageView(ownerPhoto, args.ownerPhoto)
+        ownerDescription.text = args.ownerDescription
+        ownerName.text = args.ownerName
     }
 }
