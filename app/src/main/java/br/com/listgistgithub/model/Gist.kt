@@ -27,6 +27,8 @@ data class Gist(
     var owner: Owner? = null,
 
     @SerializedName("files")
-    var files: @RawValue Map<String, Map<String, Any>>? = null
+    var files: @RawValue Map<String, Map<String, Any>>? = null,
+
+    var isFavorite: Boolean = false
 
 )

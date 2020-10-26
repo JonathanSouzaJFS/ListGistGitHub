@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
+import br.com.listgistgithub.R
 import br.com.listgistgithub.databinding.ItemGistBinding
 import br.com.listgistgithub.model.Gist
 
@@ -17,6 +18,8 @@ class HomeAdapter(
 ) : RecyclerView.Adapter<HomeAdapter.DataViewHolder>() {
 
     private var lastPosition = -1
+    lateinit var favoriteListener: OnFavoriteClickListener
+    lateinit var unFavoriteListener: OnUnFavoriteClickListener
 
     inner class DataViewHolder(
         private val binding: ItemGistBinding,
@@ -27,6 +30,10 @@ class HomeAdapter(
             binding.gist = gist
             binding.root.setOnClickListener {
                 onItemClickListener.invoke(gist)
+            }
+            binding.iconFavoriteGist.setOnClickListener {
+                it.setBackgroundResource(if (gist.isFavorite) R.drawable.ic_heart_pressed else R.drawable.ic_heart)
+                favoriteListener.onClick(gist)
             }
         }
     }
@@ -39,7 +46,7 @@ class HomeAdapter(
             lastPosition = position
         }
     }
-    
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val inflater = LayoutInflater.from(context)
         val binding = ItemGistBinding.inflate(inflater, parent, false)
@@ -57,5 +64,27 @@ class HomeAdapter(
         this.list.apply {
             addAll(gists)
         }
+    }
+
+    inline fun setOnFavoriteClickListener(crossinline listener: (Gist) -> Unit) {
+        this.favoriteListener = object :
+            OnFavoriteClickListener {
+            override fun onClick(gist: Gist) = listener(gist)
+        }
+    }
+
+    inline fun setOnUnFavoriteClickListener(crossinline listener: (Gist) -> Unit) {
+        this.unFavoriteListener = object :
+            OnUnFavoriteClickListener {
+            override fun onClick(gist: Gist) = listener(gist)
+        }
+    }
+
+    interface OnFavoriteClickListener {
+        fun onClick(gist: Gist) = Unit
+    }
+
+    interface OnUnFavoriteClickListener {
+        fun onClick(gist: Gist) = Unit
     }
 }

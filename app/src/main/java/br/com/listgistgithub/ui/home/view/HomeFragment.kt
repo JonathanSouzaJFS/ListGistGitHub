@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.listgistgithub.R
 import br.com.listgistgithub.data.api.ApiHelper
 import br.com.listgistgithub.data.api.RetrofitBuilder
+import br.com.listgistgithub.data.room.FavoriteDAO
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.base.ViewModelFactory
 import br.com.listgistgithub.ui.home.adapter.HomeAdapter
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
+    private lateinit var rvDAO: FavoriteDAO
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: HomeAdapter
     private var pastVisiblesItems = 0
@@ -55,11 +57,16 @@ class HomeFragment : Fragment() {
 
     private fun setupUI() {
         recyclerViewGists.layoutManager = LinearLayoutManager(requireContext())
-        adapter = HomeAdapter(requireContext(), arrayListOf()) { gist ->
+
+        adapter = HomeAdapter(requireContext(), arrayListOf()) {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
-                gist.owner!!.login!!, gist.owner!!.avatarUrl!!, gist.description!!
+                it.owner!!.login!!, it.owner!!.avatarUrl!!, it.description!!
             )
             requireView().findNavController().navigate(action)
+        }
+
+        adapter.setOnFavoriteClickListener {
+            viewModel.insertFavorite(requireContext(), it)
         }
 
         recyclerViewGists.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -67,9 +74,9 @@ class HomeFragment : Fragment() {
                 recyclerView: RecyclerView, dx: Int, dy: Int
             ) {
                 if (dy > 0) {
-                    totalItemCount = recyclerViewGists.layoutManager!!.itemCount // Total da lista
+                    totalItemCount = recyclerViewGists.layoutManager!!.itemCount
                     pastVisiblesItems =
-                        (recyclerViewGists.layoutManager as LinearLayoutManager).findLastVisibleItemPosition() // Itens visiveis na tela
+                        (recyclerViewGists.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
                     if (!loading) {
                         if (pastVisiblesItems >= totalItemCount - 1) {
