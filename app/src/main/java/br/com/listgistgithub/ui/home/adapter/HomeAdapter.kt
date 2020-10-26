@@ -55,7 +55,6 @@ class HomeAdapter(
 
     fun addGist(gists: List<Gist>) {
         this.list.apply {
-            clear()
             addAll(gists)
         }
     }

@@ -24,7 +24,17 @@
         android:id="@+id/detailsFragment"
         android:name="br.com.listgistgithub.ui.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="OwnerName"
+            app:argType="string" />
+        <argument
+            android:name="OwnerPhoto"
+            app:argType="string" />
+        <argument
+            android:name="OwnerDescription"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="br.com.listgistgithub.ui.SearchFragment"
