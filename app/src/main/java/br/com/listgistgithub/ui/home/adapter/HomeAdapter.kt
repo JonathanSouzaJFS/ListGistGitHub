@@ -31,9 +31,13 @@ class HomeAdapter(
             binding.root.setOnClickListener {
                 onItemClickListener.invoke(gist)
             }
+
+            binding.iconFavoriteGist.setBackgroundResource(if (gist.isFavorite) R.drawable.ic_heart_pressed else R.drawable.ic_heart)
+
             binding.iconFavoriteGist.setOnClickListener {
+                if (!gist.isFavorite) favoriteListener.onClick(gist) else unFavoriteListener.onClick(gist)
+                gist.isFavorite = !gist.isFavorite
                 it.setBackgroundResource(if (gist.isFavorite) R.drawable.ic_heart_pressed else R.drawable.ic_heart)
-                favoriteListener.onClick(gist)
             }
         }
     }

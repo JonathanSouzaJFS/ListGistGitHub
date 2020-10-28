@@ -44,7 +44,9 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupUI()
+        setupRecyclerView()
+        setupRecyclerViewAdapter()
+        viewModel.getFavorites(requireActivity())
         setupObservers()
     }
 
@@ -55,19 +57,9 @@ class HomeFragment : Fragment() {
         ).get(HomeViewModel::class.java)
     }
 
-    private fun setupUI() {
+    private fun setupRecyclerView() {
         recyclerViewGists.layoutManager = LinearLayoutManager(requireContext())
-
-        adapter = HomeAdapter(requireContext(), arrayListOf()) {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
-                it.owner!!.login!!, it.owner!!.avatarUrl!!, it.description!!
-            )
-            requireView().findNavController().navigate(action)
-        }
-
-        adapter.setOnFavoriteClickListener {
-            viewModel.insertFavorite(requireContext(), it)
-        }
+        recyclerViewGists.setHasFixedSize(true)
 
         recyclerViewGists.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(
@@ -82,13 +74,28 @@ class HomeFragment : Fragment() {
                         if (pastVisiblesItems >= totalItemCount - 1) {
                             loading = true
                             pageLoad += 1
+                            viewModel.getFavorites(requireActivity())
                             setupObservers()
                         }
                     }
                 }
             }
         })
+    }
 
+    private fun setupRecyclerViewAdapter() {
+        adapter = HomeAdapter(requireContext(), arrayListOf()) {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
+                it.owner!!.login!!, it.owner!!.avatarUrl!!, it.description!!
+            )
+            requireView().findNavController().navigate(action)
+        }
+        adapter.setOnFavoriteClickListener {
+            viewModel.insertFavorite(requireContext(), it)
+        }
+        adapter.setOnUnFavoriteClickListener {
+            viewModel.deleteFavorite(requireContext(), it.id)
+        }
         recyclerViewGists.adapter = adapter
     }
 
@@ -115,6 +122,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrieveList(gists: List<Gist>) {
+        viewModel.setGistsFavorites(gists)
         adapter.apply {
             addGist(gists)
             notifyDataSetChanged()
