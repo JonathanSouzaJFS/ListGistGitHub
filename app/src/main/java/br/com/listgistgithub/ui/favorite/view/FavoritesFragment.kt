@@ -70,6 +70,7 @@ class FavoritesFragment : Fragment() {
 
     private fun retrieveList(gists: List<Gist>) {
         adapter.apply {
+            clearItems()
             addGist(gists)
             notifyDataSetChanged()
         }

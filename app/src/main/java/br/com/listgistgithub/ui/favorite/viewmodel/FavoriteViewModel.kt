@@ -3,7 +3,6 @@ package br.com.listgistgithub.ui.favorite.viewmodel
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import br.com.listgistgithub.data.model.Favorite
 import br.com.listgistgithub.data.model.toGist
 import br.com.listgistgithub.data.repository.FavoriteRepository

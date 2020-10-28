@@ -39,5 +39,6 @@ fun Gist.toFavorite() = Favorite(
     type = (files!!.values.firstOrNull()?.getValue("type") ?: "Undefined") as String,
     ownerName = owner!!.login,
     ownerPhoto = owner!!.avatarUrl,
-    ownerDescription = description
+    ownerDescription = description,
+    comments = comments
 )

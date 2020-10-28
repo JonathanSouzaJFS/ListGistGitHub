@@ -72,6 +72,8 @@ class HomeAdapter(
         }
     }
 
+    fun clearItems() = list.clear()
+
     fun removeItem(gist: Gist) = list.remove(gist)
 
     inline fun setOnFavoriteClickListener(crossinline listener: (Gist) -> Unit) {
