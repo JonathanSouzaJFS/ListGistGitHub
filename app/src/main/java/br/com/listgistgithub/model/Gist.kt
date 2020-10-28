@@ -1,12 +1,13 @@
 package br.com.listgistgithub.model
 
+import br.com.listgistgithub.data.model.Favorite
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.RawValue
 
 data class Gist(
 
     @SerializedName("id")
-    var id: String,
+    var id: String? = null,
 
     @SerializedName("html_url")
     var htmlUrl: String? = null,
@@ -30,5 +31,13 @@ data class Gist(
     var files: @RawValue Map<String, Map<String, Any>>? = null,
 
     var isFavorite: Boolean = false
+)
 
+// favorite DTO
+fun Gist.toFavorite() = Favorite(
+    ownerId = id,
+    type = (files!!.values.firstOrNull()?.getValue("type") ?: "Undefined") as String,
+    ownerName = owner!!.login,
+    ownerPhoto = owner!!.avatarUrl,
+    ownerDescription = description
 )

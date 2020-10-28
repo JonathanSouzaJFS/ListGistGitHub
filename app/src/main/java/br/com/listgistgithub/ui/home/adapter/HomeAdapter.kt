@@ -28,14 +28,16 @@ class HomeAdapter(
 
         fun bind(gist: Gist) {
             binding.gist = gist
+
             binding.root.setOnClickListener {
                 onItemClickListener.invoke(gist)
             }
 
             binding.iconFavoriteGist.setBackgroundResource(if (gist.isFavorite) R.drawable.ic_heart_pressed else R.drawable.ic_heart)
-
             binding.iconFavoriteGist.setOnClickListener {
-                if (!gist.isFavorite) favoriteListener.onClick(gist) else unFavoriteListener.onClick(gist)
+                if (!gist.isFavorite) favoriteListener.onClick(gist) else unFavoriteListener.onClick(
+                    gist
+                )
                 gist.isFavorite = !gist.isFavorite
                 it.setBackgroundResource(if (gist.isFavorite) R.drawable.ic_heart_pressed else R.drawable.ic_heart)
             }
@@ -69,6 +71,8 @@ class HomeAdapter(
             addAll(gists)
         }
     }
+
+    fun removeItem(gist: Gist) = list.remove(gist)
 
     inline fun setOnFavoriteClickListener(crossinline listener: (Gist) -> Unit) {
         this.favoriteListener = object :

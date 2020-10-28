@@ -1,7 +1,7 @@
 package br.com.listgistgithub.data.room
 
 import androidx.room.*
-import br.com.listgistgithub.model.Favorite
+import br.com.listgistgithub.data.model.Favorite
 
 @Dao
 interface FavoriteDAO {

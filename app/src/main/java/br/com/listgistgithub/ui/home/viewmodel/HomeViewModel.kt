@@ -3,9 +3,9 @@ package br.com.listgistgithub.ui.home.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import br.com.listgistgithub.data.model.Favorite
 import br.com.listgistgithub.data.repository.FavoriteRepository
 import br.com.listgistgithub.data.repository.HomeRepository
-import br.com.listgistgithub.model.Favorite
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.utils.Resource
 import kotlinx.coroutines.CoroutineScope
@@ -30,13 +30,7 @@ class HomeViewModel(private val mainRepository: HomeRepository) : ViewModel() {
     fun insertFavorite(context: Context, gist: Gist) {
         try {
             scope.launch {
-                FavoriteRepository.insertFavorite(
-                    context,
-                    gist.id,
-                    gist.owner!!.login!!,
-                    gist.owner!!.avatarUrl!!,
-                    gist.description!!
-                )
+                FavoriteRepository.insertFavorite(context, gist)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -46,10 +40,7 @@ class HomeViewModel(private val mainRepository: HomeRepository) : ViewModel() {
     fun deleteFavorite(context: Context, ownerId: String) {
         try {
             scope.launch {
-                FavoriteRepository.deleteFavoriteById(
-                    context,
-                    ownerId
-                )
+                FavoriteRepository.deleteFavoriteById(context, ownerId)
             }
         } catch (e: Exception) {
             e.printStackTrace()

@@ -25,8 +25,7 @@ class BidingUtils {
         @BindingAdapter("bind:typeGist")
         fun loadTypeGist(textview: AppCompatTextView, files: Map<String, Map<String, Any>>) {
             textview.text = (
-                    files.values.firstOrNull()?.getValue("type") ?: "Undefined")
-                    as String
+                    files.values.firstOrNull()?.getValue("type") ?: "Undefined") as String
         }
     }
 }

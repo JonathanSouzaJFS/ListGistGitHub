@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.listgistgithub.R
 import br.com.listgistgithub.data.api.ApiHelper
 import br.com.listgistgithub.data.api.RetrofitBuilder
-import br.com.listgistgithub.data.room.FavoriteDAO
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.base.ViewModelFactory
 import br.com.listgistgithub.ui.home.adapter.HomeAdapter
@@ -24,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
-    private lateinit var rvDAO: FavoriteDAO
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: HomeAdapter
     private var pastVisiblesItems = 0
@@ -94,7 +92,7 @@ class HomeFragment : Fragment() {
             viewModel.insertFavorite(requireContext(), it)
         }
         adapter.setOnUnFavoriteClickListener {
-            viewModel.deleteFavorite(requireContext(), it.id)
+            viewModel.deleteFavorite(requireContext(), it.id!!)
         }
         recyclerViewGists.adapter = adapter
     }

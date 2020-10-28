@@ -1,8 +1,10 @@
 package br.com.listgistgithub.data.repository
 
 import android.content.Context
+import br.com.listgistgithub.data.model.Favorite
 import br.com.listgistgithub.data.room.FavoriteDatabase
-import br.com.listgistgithub.model.Favorite
+import br.com.listgistgithub.model.Gist
+import br.com.listgistgithub.model.toFavorite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -16,16 +18,10 @@ class FavoriteRepository {
             return FavoriteDatabase.getDBClient(context)
         }
 
-        fun insertFavorite(
-            context: Context,
-            ownerId: String,
-            ownerName: String,
-            ownerPhoto: String,
-            ownerDescription: String
-        ) {
+        fun insertFavorite(context: Context, gist: Gist) {
             favoriteDatabase = initializeDB(context)
             CoroutineScope(IO).launch {
-                val favorite = Favorite(ownerId, ownerName, ownerPhoto, ownerDescription)
+                val favorite = gist.toFavorite()
                 favoriteDatabase!!.favoriteDAO().insertFavorite(favorite)
             }
         }

@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="br.com.listgistgithub.ui.DetailsFragment"
+        android:name="br.com.listgistgithub.ui.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <argument
@@ -42,7 +42,11 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="br.com.listgistgithub.ui.FavoritesFragment"
+        android:name="br.com.listgistgithub.ui.favorite.view.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 </navigation>
