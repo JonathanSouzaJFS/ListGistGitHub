@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="br.com.listgistgithub.ui.favorite.view.FavoritesFragment"
+        android:name="br.com.listgistgithub.ui.favorite.view.FavoriteFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorites" >
         <action

@@ -17,7 +17,7 @@ import br.com.listgistgithub.ui.home.adapter.HomeAdapter
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 
-class FavoritesFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class FavoriteFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var viewModel: FavoriteViewModel
     private lateinit var adapter: HomeAdapter
