@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class FavoriteViewModel() : BaseViewModel() {
+class FavoriteViewModel : BaseViewModel() {
 
     var listFavorite: MutableLiveData<List<Favorite>> = MutableLiveData()
 
