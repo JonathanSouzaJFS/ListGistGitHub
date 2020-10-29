@@ -14,9 +14,6 @@
             android:id="@+id/action_homeFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
     </fragment>
@@ -35,11 +32,6 @@
             android:name="ownerDescription"
             app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="br.com.listgistgithub.ui.SearchFragment"
-        android:label="Search"
-        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="br.com.listgistgithub.ui.favorite.view.FavoriteFragment"
