@@ -2,36 +2,40 @@ package br.com.listgistgithub.ui.favorite.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import br.com.listgistgithub.data.model.Favorite
 import br.com.listgistgithub.data.model.toGist
 import br.com.listgistgithub.data.repository.FavoriteRepository
 import br.com.listgistgithub.model.Gist
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import br.com.listgistgithub.ui.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class FavoriteViewModel() : ViewModel() {
+class FavoriteViewModel() : BaseViewModel() {
 
     var listFavorite: MutableLiveData<List<Favorite>> = MutableLiveData()
 
-    private val scope = CoroutineScope(Job() + Dispatchers.IO)
-
     fun deleteFavorite(context: Context, ownerId: String) {
-        try {
-            scope.launch {
+        loading.value = true
+        launch {
+            try {
                 FavoriteRepository.deleteFavoriteById(context, ownerId)
+                loading.value = false
+            } catch (e: Exception) {
+                e.printStackTrace()
+                loading.value = false
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 
     fun getFavorites(context: Context) {
-        scope.launch {
-            val favorites = FavoriteRepository.getFavorites(context)
-            listFavorite.postValue(favorites)
+        loading.value = true
+        launch {
+            withContext(IO) {
+                val favorites = FavoriteRepository.getFavorites(context)
+                listFavorite.postValue(favorites)
+                loading.postValue(false)
+            }
         }
     }
 

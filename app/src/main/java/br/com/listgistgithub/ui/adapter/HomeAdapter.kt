@@ -1,4 +1,4 @@
-package br.com.listgistgithub.ui.home.adapter
+package br.com.listgistgithub.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

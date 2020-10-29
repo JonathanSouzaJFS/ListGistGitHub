@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.listgistgithub.R
 import br.com.listgistgithub.model.Gist
+import br.com.listgistgithub.ui.adapter.HomeAdapter
 import br.com.listgistgithub.ui.favorite.viewmodel.FavoriteViewModel
-import br.com.listgistgithub.ui.home.adapter.HomeAdapter
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 
@@ -68,6 +68,9 @@ class FavoriteFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun setupObservers() {
         viewModel.listFavorite.observe(requireActivity(), Observer {
             retrieveList(viewModel.convertFavoriteToGist(it))
+        })
+        viewModel.loading.observe(viewLifecycleOwner, Observer { load ->
+            swiperefresh.isRefreshing = load
         })
     }
 

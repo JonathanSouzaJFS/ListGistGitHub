@@ -1,23 +1,22 @@
 package br.com.listgistgithub.ui.home.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import br.com.listgistgithub.data.model.Favorite
 import br.com.listgistgithub.data.repository.FavoriteRepository
 import br.com.listgistgithub.data.repository.HomeRepository
 import br.com.listgistgithub.model.Gist
+import br.com.listgistgithub.ui.base.BaseViewModel
 import br.com.listgistgithub.utils.Resource
 import br.com.listgistgithub.utils.hasInternet
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class HomeViewModel(private val mainRepository: HomeRepository) : ViewModel() {
+class HomeViewModel(private val mainRepository: HomeRepository) : BaseViewModel() {
 
     private var listFavorite: MutableList<Favorite> = mutableListOf()
-    private val scope = CoroutineScope(Job() + Dispatchers.IO)
 
     fun getGirts(context: Context, page: Int, perPage: Int = 30) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
@@ -32,29 +31,39 @@ class HomeViewModel(private val mainRepository: HomeRepository) : ViewModel() {
     }
 
     fun insertFavorite(context: Context, gist: Gist) {
-        try {
-            scope.launch {
+        loading.value = true
+        launch {
+            try {
                 FavoriteRepository.insertFavorite(context, gist)
+                loading.value = false
+            } catch (e: Exception) {
+                e.printStackTrace()
+                loading.value = false
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 
     fun deleteFavorite(context: Context, ownerId: String) {
-        try {
-            scope.launch {
+        loading.value = true
+        launch {
+            try {
                 FavoriteRepository.deleteFavoriteById(context, ownerId)
+                loading.value = false
+            } catch (e: Exception) {
+                e.printStackTrace()
+                loading.value = false
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 
     fun getFavorites(context: Context) {
-        scope.launch {
-            val favorites = FavoriteRepository.getFavorites(context)
-            listFavorite = favorites
+        loading.value = true
+        launch {
+            withContext(IO) {
+                val favorites = FavoriteRepository.getFavorites(context)
+                listFavorite = favorites
+                loading.postValue(false)
+            }
         }
     }
 
