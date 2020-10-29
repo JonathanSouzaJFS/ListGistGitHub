@@ -31,6 +31,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private var pageLoad = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -45,25 +46,9 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun setupRecyclerView() {
         recyclerViewGists.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewGists.setHasFixedSize(true)
-
         recyclerViewGists.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(
-                recyclerView: RecyclerView, dx: Int, dy: Int
-            ) {
-                if (dy > 0) {
-                    totalItemCount = recyclerViewGists.layoutManager!!.itemCount
-                    pastVisiblesItems =
-                        (recyclerViewGists.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-
-                    if (!loading) {
-                        if (pastVisiblesItems >= totalItemCount - 1) {
-                            loading = true
-                            pageLoad += 1
-                            viewModel.getFavorites(requireActivity())
-                            setupObservers()
-                        }
-                    }
-                }
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) addingMoreGists()
             }
         })
     }
@@ -111,6 +96,21 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onRefresh() {
         viewModel.getFavorites(requireActivity())
         setupObservers()
+    }
+
+    private fun addingMoreGists() {
+        totalItemCount = recyclerViewGists.layoutManager!!.itemCount
+        pastVisiblesItems =
+            (recyclerViewGists.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+        if (!loading) {
+            if (pastVisiblesItems >= totalItemCount - 1) {
+                loading = true
+                pageLoad += 1
+                viewModel.getFavorites(requireActivity())
+                setupObservers()
+            }
+        }
     }
 
     private fun retrieveList(gists: List<Gist>) {
