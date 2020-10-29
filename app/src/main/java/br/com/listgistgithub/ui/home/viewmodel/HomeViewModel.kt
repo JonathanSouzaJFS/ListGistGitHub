@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.liveData
 import br.com.listgistgithub.data.model.Favorite
 import br.com.listgistgithub.data.repository.FavoriteRepository
+import br.com.listgistgithub.data.repository.FavoriteRepositoryImpl
 import br.com.listgistgithub.data.repository.GistRepository
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.base.BaseViewModel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(private val mainRepository: GistRepository) : BaseViewModel() {
+class HomeViewModel(private val gistRepository: GistRepository, private val favoriteRepository: FavoriteRepository) : BaseViewModel() {
 
     private var listFavorite: MutableList<Favorite> = mutableListOf()
 
@@ -22,7 +23,7 @@ class HomeViewModel(private val mainRepository: GistRepository) : BaseViewModel(
         emit(Resource.loading(data = null))
         if (hasInternet(context)) {
             try {
-                emit(Resource.success(data = mainRepository.getGists(page, perPage)))
+                emit(Resource.success(data = gistRepository.getGists(page, perPage)))
             } catch (exception: Exception) {
                 emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
             }
@@ -33,7 +34,7 @@ class HomeViewModel(private val mainRepository: GistRepository) : BaseViewModel(
     fun insertFavorite(context: Context, gist: Gist) {
         launch {
             try {
-                FavoriteRepository.insertFavorite(context, gist)
+                favoriteRepository.insertFavorite(context, gist)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -43,7 +44,7 @@ class HomeViewModel(private val mainRepository: GistRepository) : BaseViewModel(
     fun deleteFavorite(context: Context, ownerId: String) {
         launch {
             try {
-                FavoriteRepository.deleteFavoriteById(context, ownerId)
+                favoriteRepository.deleteFavoriteById(context, ownerId)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -53,7 +54,7 @@ class HomeViewModel(private val mainRepository: GistRepository) : BaseViewModel(
     fun getFavorites(context: Context) {
         launch {
             withContext(IO) {
-                val favorites = FavoriteRepository.getFavorites(context)
+                val favorites = favoriteRepository.getFavorites(context)
                 listFavorite = favorites
             }
         }

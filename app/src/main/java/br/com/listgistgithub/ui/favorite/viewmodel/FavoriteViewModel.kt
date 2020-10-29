@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class FavoriteViewModel : BaseViewModel() {
+class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) : BaseViewModel() {
 
     var listFavorite: MutableLiveData<List<Favorite>> = MutableLiveData()
 
@@ -19,7 +19,7 @@ class FavoriteViewModel : BaseViewModel() {
         loading.value = true
         launch {
             try {
-                FavoriteRepository.deleteFavoriteById(context, ownerId)
+                favoriteRepository.deleteFavoriteById(context, ownerId)
                 loading.value = false
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -32,7 +32,7 @@ class FavoriteViewModel : BaseViewModel() {
         loading.value = true
         launch {
             withContext(IO) {
-                val favorites = FavoriteRepository.getFavorites(context)
+                val favorites = favoriteRepository.getFavorites(context)
                 listFavorite.postValue(favorites)
                 loading.postValue(false)
             }
