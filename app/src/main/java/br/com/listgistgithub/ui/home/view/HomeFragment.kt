@@ -100,7 +100,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun setupObservers() {
-        viewModel.getGirts(pageLoad, 30).observe(requireActivity(), Observer {
+        viewModel.getGirts(requireContext(), pageLoad).observe(requireActivity(), Observer {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {

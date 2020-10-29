@@ -52,7 +52,7 @@ class FavoriteFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun setupRecyclerViewAdapter() {
         adapter = HomeAdapter(requireContext(), arrayListOf()) {
-            val action = FavoritesFragmentDirections.actionFavoritesFragmentToDetailsFragment(
+            val action = FavoriteFragmentDirections.actionFavoritesFragmentToDetailsFragment(
                 it.owner!!.login!!, it.owner!!.avatarUrl!!, it.description!!
             )
             requireView().findNavController().navigate(action)

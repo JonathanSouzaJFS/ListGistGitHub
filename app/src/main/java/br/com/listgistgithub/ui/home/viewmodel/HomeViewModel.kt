@@ -8,6 +8,7 @@ import br.com.listgistgithub.data.repository.FavoriteRepository
 import br.com.listgistgithub.data.repository.HomeRepository
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.utils.Resource
+import br.com.listgistgithub.utils.hasInternet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,13 +19,16 @@ class HomeViewModel(private val mainRepository: HomeRepository) : ViewModel() {
     private var listFavorite: MutableList<Favorite> = mutableListOf()
     private val scope = CoroutineScope(Job() + Dispatchers.IO)
 
-    fun getGirts(page: Int, perPage: Int) = liveData(Dispatchers.IO) {
+    fun getGirts(context: Context, page: Int, perPage: Int = 30) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
-        try {
-            emit(Resource.success(data = mainRepository.getGists(page, perPage)))
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
-        }
+        if (hasInternet(context)) {
+            try {
+                emit(Resource.success(data = mainRepository.getGists(page, perPage)))
+            } catch (exception: Exception) {
+                emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+            }
+        } else
+            emit(Resource.error(data = null, message = "You have no internet connection!"))
     }
 
     fun insertFavorite(context: Context, gist: Gist) {
