@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="br.com.listgistgithub.ui.home.view.HomeFragment"
-        android:label="fragment_home"
+        android:label="Gists"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailsFragment"
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="br.com.listgistgithub.ui.details.DetailsFragment"
-        android:label="fragment_details"
+        android:label="Details"
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="ownerName"
@@ -38,12 +38,12 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="br.com.listgistgithub.ui.SearchFragment"
-        android:label="fragment_search"
+        android:label="Search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="br.com.listgistgithub.ui.favorite.view.FavoritesFragment"
-        android:label="fragment_favorites"
+        android:label="Favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
             android:id="@+id/action_favoritesFragment_to_detailsFragment"

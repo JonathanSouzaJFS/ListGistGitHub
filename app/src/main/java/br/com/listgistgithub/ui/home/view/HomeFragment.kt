@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.listgistgithub.R
 import br.com.listgistgithub.data.api.ApiHelper
 import br.com.listgistgithub.data.api.RetrofitBuilder
@@ -21,7 +22,7 @@ import br.com.listgistgithub.ui.home.viewmodel.HomeViewModel
 import br.com.listgistgithub.utils.Status
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var adapter: HomeAdapter
@@ -46,6 +47,7 @@ class HomeFragment : Fragment() {
         setupRecyclerViewAdapter()
         viewModel.getFavorites(requireActivity())
         setupObservers()
+        swiperefresh.setOnRefreshListener(this)
     }
 
     private fun setupViewModel() {
@@ -105,11 +107,13 @@ class HomeFragment : Fragment() {
                         progressBar.visibility = View.GONE
                         resource.data?.let { gists -> retrieveList(gists) }
                         loading = false
+                        swiperefresh.isRefreshing = false
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         loading = false
+                        swiperefresh.isRefreshing = false
                     }
                     Status.LOADING -> {
                         progressBar.visibility = View.VISIBLE
@@ -117,6 +121,11 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onRefresh() {
+        viewModel.getFavorites(requireActivity())
+        setupObservers()
     }
 
     private fun retrieveList(gists: List<Gist>) {

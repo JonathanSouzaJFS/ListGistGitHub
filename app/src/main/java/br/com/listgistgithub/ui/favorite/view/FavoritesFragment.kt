@@ -9,13 +9,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.listgistgithub.R
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.favorite.viewmodel.FavoriteViewModel
 import br.com.listgistgithub.ui.home.adapter.HomeAdapter
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
-class FavoritesFragment : Fragment() {
+
+class FavoritesFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var viewModel: FavoriteViewModel
     private lateinit var adapter: HomeAdapter
@@ -36,6 +38,7 @@ class FavoritesFragment : Fragment() {
         setupRecyclerView()
         setupRecyclerViewAdapter()
         setupObservers()
+        swiperefresh.setOnRefreshListener(this)
     }
 
     private fun setupViewModel() {
@@ -72,7 +75,12 @@ class FavoritesFragment : Fragment() {
         adapter.apply {
             clearItems()
             addGist(gists)
+            swiperefresh.isRefreshing = false
             notifyDataSetChanged()
         }
+    }
+
+    override fun onRefresh() {
+        viewModel.getFavorites(requireContext())
     }
 }
