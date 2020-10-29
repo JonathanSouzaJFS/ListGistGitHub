@@ -2,33 +2,38 @@ package br.com.listgistgithub.ui.home.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.liveData
+import br.com.listgistgithub.R
 import br.com.listgistgithub.data.model.Favorite
 import br.com.listgistgithub.data.repository.FavoriteRepository
-import br.com.listgistgithub.data.repository.FavoriteRepositoryImpl
 import br.com.listgistgithub.data.repository.GistRepository
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.base.BaseViewModel
 import br.com.listgistgithub.utils.Resource
 import br.com.listgistgithub.utils.hasInternet
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(private val gistRepository: GistRepository, private val favoriteRepository: FavoriteRepository) : BaseViewModel() {
+class HomeViewModel(
+    private val gistRepository: GistRepository,
+    private val favoriteRepository: FavoriteRepository
+) : BaseViewModel() {
 
     private var listFavorite: MutableList<Favorite> = mutableListOf()
 
-    fun getGirts(context: Context, page: Int, perPage: Int = 30) = liveData(Dispatchers.IO) {
+    fun getGirts(context: Context, page: Int, perPage: Int = 30) = liveData(IO) {
         emit(Resource.loading(data = null))
         if (hasInternet(context)) {
             try {
                 emit(Resource.success(data = gistRepository.getGists(page, perPage)))
             } catch (exception: Exception) {
-                emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+                emit(
+                    Resource.error(data = null, message = exception.message ?: context.getString(R.string.error_default)
+                    )
+                )
             }
         } else
-            emit(Resource.error(data = null, message = "You have no internet connection!"))
+            emit(Resource.error(data = null, message = context.getString(R.string.error_connection)))
     }
 
     fun insertFavorite(context: Context, gist: Gist) {

@@ -22,11 +22,7 @@ class FavoriteFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private val viewModel by viewModel<FavoriteViewModel>()
     private lateinit var adapter: HomeAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
