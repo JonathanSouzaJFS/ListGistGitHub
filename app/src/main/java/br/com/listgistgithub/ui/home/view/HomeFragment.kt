@@ -7,24 +7,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.listgistgithub.R
-import br.com.listgistgithub.data.api.ApiHelper
-import br.com.listgistgithub.data.api.RetrofitBuilder
 import br.com.listgistgithub.model.Gist
-import br.com.listgistgithub.ui.base.ViewModelFactory
 import br.com.listgistgithub.ui.adapter.HomeAdapter
 import br.com.listgistgithub.ui.home.viewmodel.HomeViewModel
 import br.com.listgistgithub.utils.Status
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel by viewModel<HomeViewModel>()
+
+
     private lateinit var adapter: HomeAdapter
     private var pastVisiblesItems = 0
     private var totalItemCount = 0
@@ -37,8 +36,6 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        setupViewModel()
-
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -48,13 +45,6 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         viewModel.getFavorites(requireActivity())
         setupObservers()
         swiperefresh.setOnRefreshListener(this)
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        ).get(HomeViewModel::class.java)
     }
 
     private fun setupRecyclerView() {

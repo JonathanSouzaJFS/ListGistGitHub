@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.liveData
 import br.com.listgistgithub.data.model.Favorite
 import br.com.listgistgithub.data.repository.FavoriteRepository
-import br.com.listgistgithub.data.repository.HomeRepository
+import br.com.listgistgithub.data.repository.GistRepository
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.base.BaseViewModel
 import br.com.listgistgithub.utils.Resource
@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(private val mainRepository: HomeRepository) : BaseViewModel() {
+class HomeViewModel(private val mainRepository: GistRepository) : BaseViewModel() {
 
     private var listFavorite: MutableList<Favorite> = mutableListOf()
 
