@@ -31,38 +31,30 @@ class HomeViewModel(private val mainRepository: HomeRepository) : BaseViewModel(
     }
 
     fun insertFavorite(context: Context, gist: Gist) {
-        loading.value = true
         launch {
             try {
                 FavoriteRepository.insertFavorite(context, gist)
-                loading.value = false
             } catch (e: Exception) {
                 e.printStackTrace()
-                loading.value = false
             }
         }
     }
 
     fun deleteFavorite(context: Context, ownerId: String) {
-        loading.value = true
         launch {
             try {
                 FavoriteRepository.deleteFavoriteById(context, ownerId)
-                loading.value = false
             } catch (e: Exception) {
                 e.printStackTrace()
-                loading.value = false
             }
         }
     }
 
     fun getFavorites(context: Context) {
-        loading.value = true
         launch {
             withContext(IO) {
                 val favorites = FavoriteRepository.getFavorites(context)
                 listFavorite = favorites
-                loading.postValue(false)
             }
         }
     }
