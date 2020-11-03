@@ -8,7 +8,7 @@ import br.com.listgistgithub.data.repository.FavoriteRepository
 import br.com.listgistgithub.data.repository.GistRepository
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.base.BaseViewModel
-import br.com.listgistgithub.utils.Resource
+import br.com.listgistgithub.utils.NetworkResponse
 import br.com.listgistgithub.utils.hasInternet
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -22,18 +22,15 @@ class HomeViewModel(
     private var listFavorite: MutableList<Favorite> = mutableListOf()
 
     fun getGirts(context: Context, page: Int, perPage: Int = 30) = liveData(IO) {
-        emit(Resource.loading(data = null))
+        emit(NetworkResponse.Loading)
         if (hasInternet(context)) {
             try {
-                emit(Resource.success(data = gistRepository.getGists(page, perPage)))
+                emit(NetworkResponse.Success(data = gistRepository.getGists(page, perPage)))
             } catch (exception: Exception) {
-                emit(
-                    Resource.error(data = null, message = exception.message ?: context.getString(R.string.error_default)
-                    )
-                )
+                emit(NetworkResponse.Error(exception = exception.message ?: context.getString(R.string.error_default)))
             }
         } else
-            emit(Resource.error(data = null, message = context.getString(R.string.error_connection)))
+            emit(NetworkResponse.Error(exception = context.getString(R.string.error_connection)))
     }
 
     fun insertFavorite(context: Context, gist: Gist) {

@@ -15,7 +15,7 @@ import br.com.listgistgithub.R
 import br.com.listgistgithub.model.Gist
 import br.com.listgistgithub.ui.adapter.HomeAdapter
 import br.com.listgistgithub.ui.home.viewmodel.HomeViewModel
-import br.com.listgistgithub.utils.Status
+import br.com.listgistgithub.utils.NetworkResponse
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -72,20 +72,21 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun setupObservers() {
         viewModel.getGirts(requireContext(), pageLoad).observe(requireActivity(), Observer {
             it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
+                when (resource) {
+                    is NetworkResponse.Success -> {
                         progressBar.visibility = View.GONE
-                        resource.data?.let { gists -> retrieveList(gists) }
+                        retrieveList(resource.data)
                         loading = false
                         swiperefresh.isRefreshing = false
                     }
-                    Status.ERROR -> {
+                    is NetworkResponse.Error -> {
                         progressBar.visibility = View.GONE
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), resource.exception, Toast.LENGTH_LONG)
+                            .show()
                         loading = false
                         swiperefresh.isRefreshing = false
                     }
-                    Status.LOADING -> {
+                    is NetworkResponse.Loading -> {
                         progressBar.visibility = View.VISIBLE
                     }
                 }
