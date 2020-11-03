@@ -7,28 +7,28 @@ import kotlinx.android.parcel.RawValue
 data class Gist(
 
     @SerializedName("id")
-    var id: String? = null,
+    var id: String = " ",
 
     @SerializedName("html_url")
-    var htmlUrl: String? = null,
+    var htmlUrl: String =   " ",
 
     @SerializedName("description")
-    var description: String? = null,
+    var description: String =  " ",
 
     @SerializedName("comments")
-    var comments: Int? = null,
+    var comments: Int = 0,
 
     @SerializedName("created_at")
-    var createdAt: String? = null,
+    var createdAt: String = " ",
 
     @SerializedName("updated_at")
-    var updatedAt: String? = null,
+    var updatedAt: String = " ",
 
     @SerializedName("owner")
-    var owner: Owner? = null,
+    var owner: Owner,
 
     @SerializedName("files")
-    var files: @RawValue Map<String, Map<String, Any>>? = null,
+    var files: @RawValue Map<String, Map<String, Any>>,
 
     var isFavorite: Boolean = false
 )
@@ -36,9 +36,9 @@ data class Gist(
 // favorite DTO
 fun Gist.toFavorite() = Favorite(
     ownerId = id,
-    type = (files!!.values.firstOrNull()?.getValue("type") ?: "Undefined") as String,
-    ownerName = owner!!.login,
-    ownerPhoto = owner!!.avatarUrl,
+    type = (files.values.firstOrNull()?.getValue("type") ?: "Undefined") as String,
+    ownerName = owner.login,
+    ownerPhoto = owner.avatarUrl,
     ownerDescription = description,
     comments = comments
 )

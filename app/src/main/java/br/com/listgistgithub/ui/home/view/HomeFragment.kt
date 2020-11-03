@@ -56,7 +56,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun setupRecyclerViewAdapter() {
         adapter = HomeAdapter(requireContext(), arrayListOf()) {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
-                it.owner!!.login!!, it.owner!!.avatarUrl!!, it.description!!
+                it.owner.login, it.owner.avatarUrl, it.description
             )
             requireView().findNavController().navigate(action)
         }
@@ -64,7 +64,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             viewModel.insertFavorite(requireContext(), it)
         }
         adapter.setOnUnFavoriteClickListener {
-            viewModel.deleteFavorite(requireContext(), it.id!!)
+            viewModel.deleteFavorite(requireContext(), it.id)
         }
         recyclerViewGists.adapter = adapter
     }

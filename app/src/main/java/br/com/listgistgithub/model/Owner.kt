@@ -7,14 +7,14 @@ data class Owner(
 
     @SerializedName("login")
     @Expose
-    var login: String? = null,
+    var login: String = " ",
 
     @SerializedName("avatar_url")
     @Expose
-    var avatarUrl: String? = null,
+    var avatarUrl: String = " ",
 
     @SerializedName("html_url")
     @Expose
-    var htmlUrl: String? = null
+    var htmlUrl: String = " "
 
 )
