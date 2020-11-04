@@ -26,7 +26,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         BidingUtils.loadImageView(ownerPhoto, args.ownerPhoto)
-        ownerDescription.text = args.ownerDescription
-        ownerName.text = args.ownerName
+        ownerDescription.text = args.ownerDescription ?: ""
+        ownerName.text = args.ownerName ?: ""
     }
 }

@@ -74,13 +74,13 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             it?.let { resource ->
                 when (resource) {
                     is NetworkResponse.Success -> {
-                        progressBar.visibility = View.GONE
+                        progressBar.visibility = View.GONE // Crash
                         retrieveList(resource.data)
                         loading = false
                         swiperefresh.isRefreshing = false
                     }
                     is NetworkResponse.Error -> {
-                        progressBar.visibility = View.GONE
+                        progressBar.visibility = View.GONE // Crash
                         Toast.makeText(requireContext(), resource.exception, Toast.LENGTH_LONG)
                             .show()
                         loading = false
