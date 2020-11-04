@@ -10,10 +10,8 @@ import kotlin.coroutines.CoroutineContext
 abstract class BaseViewModel : ViewModel(), CoroutineScope {
 
     val loading = MutableLiveData<Boolean>()
-
     private val job = Job()
 
     override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
-
+        get() = job + Dispatchers.IO
 }
