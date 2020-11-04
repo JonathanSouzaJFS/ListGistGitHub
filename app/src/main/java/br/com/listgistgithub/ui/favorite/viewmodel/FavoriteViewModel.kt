@@ -20,10 +20,10 @@ class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) : Ba
         launch {
             try {
                 favoriteRepository.deleteFavoriteById(context, ownerId)
-                loading.value = false
+                loading.postValue(false)
             } catch (e: Exception) {
                 e.printStackTrace()
-                loading.value = false
+                loading.postValue(false)
             }
         }
     }
