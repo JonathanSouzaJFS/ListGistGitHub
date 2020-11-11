@@ -4,6 +4,7 @@
     <!-- Menu -->
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
+    <string name="title_search">Search</string>
 
     <!-- Error -->
     <string name="error_default">Error Occurred!</string>
