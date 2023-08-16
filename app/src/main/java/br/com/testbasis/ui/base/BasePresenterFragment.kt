@@ -1,7 +1,6 @@
-package com.djekgrif.kotlinmvpkoin.ui.pages.base
+package br.com.testbasis.ui.base
 
 import androidx.fragment.app.Fragment
-import br.com.testbasis.ui.base.BasePresenter
 
 abstract class BasePresenterFragment<P : BasePresenter<*>> : Fragment() {
 

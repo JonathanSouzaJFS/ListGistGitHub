@@ -21,7 +21,7 @@ import br.com.testbasis.utils.isCPF
 import br.com.testbasis.utils.isPhoneValid
 import br.com.testbasis.utils.isValidEmail
 import br.com.testbasis.utils.showCreateAddress
-import com.djekgrif.kotlinmvpkoin.ui.pages.base.BasePresenterFragment
+import br.com.testbasis.ui.base.BasePresenterFragment
 import io.realm.RealmList
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf

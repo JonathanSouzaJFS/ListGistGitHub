@@ -21,7 +21,7 @@ import br.com.testbasis.databinding.FragmentHomeBinding
 import br.com.testbasis.ui.adapter.HomeAdapter
 import br.com.testbasis.utils.EMPTY
 import br.com.testbasis.utils.showAlertDialog
-import com.djekgrif.kotlinmvpkoin.ui.pages.base.BasePresenterFragment
+import br.com.testbasis.ui.base.BasePresenterFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
