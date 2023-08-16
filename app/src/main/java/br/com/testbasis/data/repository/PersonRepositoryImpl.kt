@@ -7,20 +7,20 @@ class PersonRepositoryImpl : PersonRepository {
 
     private val db = Realm.getDefaultInstance()
 
-    override suspend fun insertPerson(person: Person) {
+    override fun insertPerson(person: Person) {
         db.executeTransactionAsync { transactionRealm ->
             transactionRealm.insert(person)
         }
     }
 
-    override suspend fun deletePerson(person: Person) {
+    override fun deletePerson(person: Person) {
         db.executeTransaction { transactionRealm ->
             transactionRealm.where(Person::class.java).equalTo("id", person.id).findFirst()
                 ?.deleteFromRealm()
         }
     }
 
-    override suspend fun update(person: Person) {
+    override fun update(person: Person) {
         db.executeTransactionAsync { transactionRealm ->
             val tasks = transactionRealm.where(Person::class.java)
                 .equalTo("id", person.id).findFirst()!!
@@ -37,11 +37,11 @@ class PersonRepositoryImpl : PersonRepository {
         }
     }
 
-    override suspend fun getPersonAll(): MutableList<Person> {
+    override fun getPersonAll(): MutableList<Person> {
         return db.where(Person::class.java).findAll()
     }
 
-    override suspend fun getPersonById(personId: String): Person {
+    override fun getPersonById(personId: String): Person {
         return db.where(Person::class.java).equalTo("id", personId).findFirst()!!
     }
 }

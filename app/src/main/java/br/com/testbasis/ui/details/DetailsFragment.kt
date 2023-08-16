@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,13 +16,13 @@ import br.com.testbasis.data.model.Address
 import br.com.testbasis.data.model.Person
 import br.com.testbasis.databinding.FragmentDetailsBinding
 import br.com.testbasis.ui.adapter.AddressAdapter
+import br.com.testbasis.ui.base.BasePresenterFragment
 import br.com.testbasis.utils.EMPTY
 import br.com.testbasis.utils.isCNPJ
 import br.com.testbasis.utils.isCPF
 import br.com.testbasis.utils.isPhoneValid
 import br.com.testbasis.utils.isValidEmail
 import br.com.testbasis.utils.showCreateAddress
-import br.com.testbasis.ui.base.BasePresenterFragment
 import io.realm.RealmList
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -64,6 +65,7 @@ class DetailsFragment : BasePresenterFragment<DetailsContract.Presenter>(), Deta
                     personCorporateName.visibility = View.GONE
                     personCpf.visibility = View.VISIBLE
                     personName.visibility = View.VISIBLE
+                    updateAddressLayout(false)
                 }
             }
         }
@@ -75,6 +77,7 @@ class DetailsFragment : BasePresenterFragment<DetailsContract.Presenter>(), Deta
                     personName.visibility = View.GONE
                     personCNPJ.visibility = View.VISIBLE
                     personCorporateName.visibility = View.VISIBLE
+                    updateAddressLayout(true)
                 }
             }
         }
@@ -98,6 +101,14 @@ class DetailsFragment : BasePresenterFragment<DetailsContract.Presenter>(), Deta
                 }
             }
         }
+    }
+
+    private fun updateAddressLayout(isCompany: Boolean) {
+        val params = binding.title.layoutParams as ConstraintLayout.LayoutParams
+        params.topToTop =
+            if (isCompany) binding.personCorporateName.id else binding.personCpf.id
+        params.setMargins(45, 90, 45, 50)
+        binding.title.requestLayout()
     }
 
     private fun createNewPerson(): Person {
@@ -131,7 +142,11 @@ class DetailsFragment : BasePresenterFragment<DetailsContract.Presenter>(), Deta
 
     override fun onEditPersonResponse(person: Person) {
         if (selectedRadioPerson()) {
-            Toast.makeText(requireActivity(), getString(R.string.success_edit_address), Toast.LENGTH_SHORT)
+            Toast.makeText(
+                requireActivity(),
+                getString(R.string.success_edit_address),
+                Toast.LENGTH_SHORT
+            )
                 .show()
         } else {
             Toast.makeText(
@@ -147,10 +162,18 @@ class DetailsFragment : BasePresenterFragment<DetailsContract.Presenter>(), Deta
 
     override fun onCreatePersonResponse(person: Person) {
         if (selectedRadioPerson()) {
-            Toast.makeText(requireActivity(), getString(R.string.success_create_address), Toast.LENGTH_SHORT)
+            Toast.makeText(
+                requireActivity(),
+                getString(R.string.success_create_address),
+                Toast.LENGTH_SHORT
+            )
                 .show()
         } else {
-            Toast.makeText(requireActivity(), getString(R.string.success_create_company), Toast.LENGTH_SHORT)
+            Toast.makeText(
+                requireActivity(),
+                getString(R.string.success_create_company),
+                Toast.LENGTH_SHORT
+            )
                 .show()
         }
 
@@ -167,6 +190,7 @@ class DetailsFragment : BasePresenterFragment<DetailsContract.Presenter>(), Deta
                 personName.visibility = View.GONE
                 personCNPJ.visibility = View.VISIBLE
                 personCorporateName.visibility = View.VISIBLE
+                updateAddressLayout(true)
             } else {
                 radioGroup.check(R.id.radio_person)
                 personCNPJ.setText(EMPTY)
