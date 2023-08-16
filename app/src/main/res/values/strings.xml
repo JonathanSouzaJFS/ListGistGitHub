@@ -1,12 +1,62 @@
 <resources>
-    <string name="app_name">ListGistGitHub</string>
+    <string name="app_name">Test Basis</string>
 
-    <!-- Menu -->
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_search">Search</string>
+    <string name="title_yes">Sim</string>
+    <string name="title_not">Não</string>
+    <string name="btn_update">Atualizar</string>
+    <string name="title_dialog_delete">Exclusão</string>
+    <string name="title_cancel">Cancel</string>
+    <string name="title_ok">Okay</string>
+    <string name="description_dialog_delete">Deseja realmente excluir este usuário?</string>
+
+    <string name="success_delete_person">Excluido com sucesso!</string>
+    <string name="success_address">Endereço criado com sucesso!</string>
+    <string name="success_create_address">Pessoa criado com sucesso!</string>
+    <string name="success_edit_address">Pessoa editada com sucesso!</string>
+    <string name="success_create_company">Empresa criada com sucesso!</string>
+    <string name="success_edit_company">Empresa editada com sucesso!</string>
 
     <!-- Error -->
     <string name="error_default">Error Occurred!</string>
     <string name="error_connection">You have no internet connection!</string>
+    <string name="error_cpf">CPF inválido!</string>
+    <string name="error_email">Email inválido!</string>
+    <string name="error_phone">Telefone inválido!</string>
+    <string name="error_address">Cadastre pelo menos um endereço!</string>
+    <string name="error_cnpj">CNPJ inválido!</string>
+    <string name="error_name">Nome inválido!</string>
+    <string name="error_corporateName">Nome empresarial inválido!</string>
+
+    <string name="address_text">%1$s %2$s - %3$s / %4$s</string>
+    <string name="address_company">Comercial</string>
+    <string name="address_name">Endereço</string>
+    <string name="address_number">Número</string>
+    <string name="address_complement">Complemento</string>
+    <string name="address_neighborhood">Bairro</string>
+    <string name="address_city">Cidade</string>
+    <string name="address_zipCode">CEP</string>
+    <string name="address_state">UF</string>
+    <string name="address_register">Cadastrar</string>
+    <string name="address_back">Voltar</string>
+    <string name="address_newAddress">Cadastro de Endereço</string>
+    <string name="address_residential">Residencial</string>
+
+
+    <string name="details_title_person">Pessoa Física</string>
+    <string name="details_title_person_company">Pessoa Jurídica</string>
+    <string name="details_title_phone">Phone</string>
+    <string name="details_title_email">Email</string>
+    <string name="details_title_name">Name</string>
+    <string name="details_title_cpf">CPF</string>
+    <string name="details_title_cnpj">CNPJ</string>
+    <string name="details_title_corporateName">Razão Social</string>
+    <string name="details_title_registration_address">Cadastro de Endereço</string>
+    <string name="details_title_more">+</string>
+    <string name="details_title_register">Cadastrar</string>
+
+    <string name="home_empty_person">Nenhum item cadastrado!</string>
+    <string name="home_add_person">Add Person</string>
 </resources>
